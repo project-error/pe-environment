@@ -1,0 +1,19 @@
+{
+  "name": "pe-test-environment",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Project Error",
+  "license": "MIT",
+  "scripts": {
+    "prepare": "husky install"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^13.1.0",
+    "@commitlint/config-conventional": "^13.1.0",
+    "husky": "^7.0.2",
+    "prettier": "^2.3.2"
+  },
+  "dependencies": {
+    "pretty-quick": "^3.1.1"
+  }
+}

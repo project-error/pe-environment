@@ -1,9 +1,10 @@
 import PlayerService from './player.service';
 
-on('playerJoining', () => {
+on('playerJoining', async () => {
   const _source = (global as any).source;
+  console.log('fuck face hello');
 
-  PlayerService.handleNewPlayer(_source);
+  await PlayerService.handleNewPlayer(_source);
 });
 
 on('playerDropped', () => {

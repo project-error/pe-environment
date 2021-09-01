@@ -14,28 +14,25 @@ debugData([
   },
 ]);
 
-interface ReturnClientDataCompProps {
-  data: any;
-}
-
-const ReturnClientDataComp: React.FC<ReturnClientDataCompProps> = ({ data }) => (
-  <>
-    <h5>Returned Data:</h5>
-    <pre>
-      <code>{JSON.stringify(data, null)}</code>
-    </pre>
-  </>
-);
-
-interface ReturnData {
-  x: number;
-  y: number;
-  z: number;
-}
+debugData([
+  {
+    action: 'getCharacters',
+    data: [
+      {
+        id: 1,
+        name: 'Fee male',
+      },
+      {
+        id: 2,
+        name: 'Male',
+      },
+    ],
+  },
+]);
 
 const App: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
-  const [clientData, setClientData] = useState<ReturnData | null>(null);
+  const [characters, setCharacters] = useState<any[]>([]);
 
   useNuiEvent<boolean>('setVisible', (data) => {
     // This is our handler for the setVisible action.
@@ -43,31 +40,24 @@ const App: React.FC = () => {
     setIsVisible(data);
   });
 
-  useExitListener(setIsVisible);
+  useNuiEvent<any[]>('getCharacters', (data) => {
+    // This is our handler for the setVisible action.
+    console.log(data);
+    setCharacters(data);
+  });
 
-  const handleGetClientData = () => {
-    fetchNui<ReturnData>('getClientData')
-      .then((retData) => {
-        console.log('Got return data from client scripts:');
-        console.dir(retData);
-        setClientData(retData);
-      })
-      .catch((e) => {
-        console.error('Setting mock data due to error', e);
-        setClientData({ x: 500, y: 300, z: 200 });
-      });
-  };
+  useExitListener(setIsVisible);
 
   return (
     <div className="nui-wrapper">
-      <div className="popup-thing" style={{ visibility: isVisible ? 'visible' : 'hidden' }}>
-        <div>
-          <h1>This is the NUI Popup!</h1>
-          <p>Exit with the escape key</p>
-          <button onClick={handleGetClientData}>Get Client Data</button>
-          {clientData && <ReturnClientDataComp data={clientData} />}
+      {characters.map((char: any) => (
+        <div key={char.id} className="char-container">
+          <div className="char-box">
+            <p>{char.name}</p>
+            <button>Select</button>
+          </div>
         </div>
-      </div>
+      ))}
     </div>
   );
 };

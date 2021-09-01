@@ -4,11 +4,13 @@ class Player {
   private readonly username: string;
   private readonly identifier: string | null;
   private readonly source: number;
+  private readonly playerId: number;
 
-  constructor({ username, source, identifier }: PlayerProps) {
+  constructor({ username, source, identifier, playerId }: PlayerProps) {
     this.username = username;
     this.source = source;
     this.identifier = identifier;
+    this.playerId = playerId;
   }
 
   getUsername(): string {
@@ -21,6 +23,10 @@ class Player {
 
   getSource(): number {
     return this.source;
+  }
+
+  getPlayerId(): number {
+    return this.playerId;
   }
 }
 

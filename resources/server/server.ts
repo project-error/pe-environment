@@ -1,1 +1,2 @@
-// Start coding!
+import 'reflect-metadata';
+import './player/player.controller';

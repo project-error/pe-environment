@@ -1,11 +1,16 @@
 import Player from './player.class';
 import { getPlayerGameLicense } from '../utils/getPlayerGameLicense';
+import { _PlayerDB } from './player.db';
+import { Container, Service } from 'typedi';
 
+@Service()
 class _PlayerService {
   private readonly playersBySource: Map<number, Player>;
+  private readonly playerDB: _PlayerDB;
 
-  constructor() {
+  constructor(db: _PlayerDB) {
     this.playersBySource = new Map<number, Player>();
+    this.playerDB = db;
   }
 
   addPlayerToMap(source: number, player: Player) {
@@ -20,15 +25,22 @@ class _PlayerService {
     return this.playersBySource.get(source);
   }
 
-  handleNewPlayer(source: number) {
-    const username = GetPlayerName(source.toString());
-    const identifier = getPlayerGameLicense(source);
+  async handleNewPlayer(source: number) {
+    try {
+      const username = GetPlayerName(source.toString());
+      const identifier = getPlayerGameLicense(source);
 
-    const newPlayer = new Player({ source, identifier: identifier, username });
+      const playerId = await this.playerDB.createPlayer(identifier, username);
+      const newPlayer = new Player({ source, username, identifier, playerId });
 
-    this.addPlayerToMap(source, newPlayer);
+      this.addPlayerToMap(source, newPlayer);
+
+      console.log(newPlayer);
+    } catch (err) {
+      console.log(err.message);
+    }
   }
 }
 
-const PlayerService = new _PlayerService();
+const PlayerService = Container.get(_PlayerService);
 export default PlayerService;

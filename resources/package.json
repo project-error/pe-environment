@@ -12,8 +12,11 @@
     "@citizenfx/client": "^2.0.4355-1",
     "@citizenfx/server": "^2.0.4355-1",
     "@types/node": "^16.3.1",
+    "@types/reflect-metadata": "^0.1.0",
     "connection-string-parser": "^1.0.4",
-    "mysql2": "^2.3.0"
+    "mysql2": "^2.3.0",
+    "reflect-metadata": "^0.1.13",
+    "typedi": "^0.10.0"
   },
   "devDependencies": {
     "remove-files-webpack-plugin": "^1.4.4",

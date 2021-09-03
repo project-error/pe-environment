@@ -13,4 +13,6 @@ export type PlayerDBProps = {
 
 export interface PlayerDatabaseProps {
   createPlayer(identifier: string, username: string): Promise<number>;
+
+  getPlayer(identifier: string): Promise<any>;
 }

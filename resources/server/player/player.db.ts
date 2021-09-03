@@ -12,4 +12,13 @@ export class _PlayerDB implements PlayerDatabaseProps {
 
     return (<ResultSetHeader>results).insertId;
   }
+
+  async getPlayer(identifier: string): Promise<any> {
+    const query = `SELECT id, username FROM player WHERE identifier = ?`;
+
+    const [results] = await pool.query(query, [identifier]);
+
+    const result = <any[]>results;
+    return result[0];
+  }
 }

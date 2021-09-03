@@ -29,8 +29,16 @@ class _PlayerService {
     try {
       const username = GetPlayerName(source.toString());
       const identifier = getPlayerGameLicense(source);
+      let playerId: number;
 
-      const playerId = await this.playerDB.createPlayer(identifier, username);
+      const doesPlayerExist = await this.playerDB.getPlayer(identifier);
+      if (doesPlayerExist) playerId = doesPlayerExist.id;
+
+      if (!doesPlayerExist) {
+        playerId = await this.playerDB.createPlayer(identifier, username);
+        console.log('player does exist');
+      }
+
       const newPlayer = new Player({ source, username, identifier, playerId });
 
       this.addPlayerToMap(source, newPlayer);

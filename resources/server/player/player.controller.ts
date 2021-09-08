@@ -1,13 +1,27 @@
-import PlayerService from './player.service';
+import { PlayerService } from './player.service';
+import { injectable, singleton } from 'tsyringe';
 
-on('playerJoining', async () => {
-  const _source = (global as any).source;
+@injectable()
+@singleton()
+export class PlayerController {
+  private readonly _playerService: PlayerService;
 
-  await PlayerService.handleNewPlayer(_source);
-});
+  constructor(playerService: PlayerService) {
+    this._playerService = playerService;
 
-on('playerDropped', () => {
-  const _source = (global as any).source;
+    on('playerJoining', async () => await this.playerJoining());
+    on('playerDropped', async () => await this.playerDropped());
+  }
 
-  PlayerService.removePlayer(_source);
-});
+  public async playerJoining() {
+    const _source = global.source;
+
+    await this._playerService.handleNewPlayer(_source);
+  }
+
+  public async playerDropped() {
+    const _source = global.source;
+
+    this._playerService.removePlayer(_source);
+  }
+}

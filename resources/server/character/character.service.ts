@@ -1,21 +1,22 @@
 import { Container, Service } from 'typedi';
-import { _CharacterDB } from './character.db';
-import PlayerService from '../player/player.service';
+import { CharacterDB } from './character.db';
+import { PlayerService } from '../player/player.service';
+import { injectable, singleton } from 'tsyringe';
 
-@Service()
-class _CharacterService {
-  private readonly database: _CharacterDB;
+@injectable()
+@singleton()
+export class CharacterService {
+  private readonly database: CharacterDB;
+  private readonly _playerService: PlayerService;
 
-  constructor(db: _CharacterDB) {
+  constructor(playerService: PlayerService, db: CharacterDB) {
     this.database = db;
+    this._playerService = playerService;
   }
 
   async handleCreateCharacter(src: number, characterDto: any) {
-    const player = PlayerService.getPlayer(src);
+    const player = this._playerService.getPlayer(src);
 
     await this.database.createCharacter(player.getIdentifier(), characterDto);
   }
 }
-
-const instance = Container.get(_CharacterService);
-export { instance as CharacterService };

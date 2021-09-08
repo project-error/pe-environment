@@ -1,9 +1,7 @@
-import { pool } from '../database/db';
-import { ResultSetHeader } from 'mysql2';
-import { Service } from 'typedi';
+import { singleton } from 'tsyringe';
 
-@Service()
-export class _CharacterDB {
+@singleton()
+export class CharacterDB {
   async createCharacter(identifier: string, characterDto: any): Promise<void> {}
 
   async getCharacters(identifier: string) {}

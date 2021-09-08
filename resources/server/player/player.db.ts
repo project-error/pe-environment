@@ -1,10 +1,9 @@
 import { pool } from '../database/db';
 import { ResultSetHeader } from 'mysql2';
-import { PlayerDatabaseProps } from './player.interface';
-import { Service } from 'typedi';
+import { singleton } from 'tsyringe';
 
-@Service()
-export class _PlayerDB implements PlayerDatabaseProps {
+@singleton()
+export class PlayerDB {
   async createPlayer(identifier: string, username: string): Promise<number> {
     const query = `INSERT INTO player (identifier, username)
                    VALUES (?, ?)`;

@@ -1,16 +1,17 @@
 import Player from './player.class';
 import { getPlayerGameLicense } from '../utils/getPlayerGameLicense';
-import { _PlayerDB } from './player.db';
-import { Container, Service } from 'typedi';
+import { PlayerDB } from './player.db';
+import { injectable, singleton } from 'tsyringe';
 
-@Service()
-class _PlayerService {
+@injectable()
+@singleton()
+export class PlayerService {
   private readonly playersBySource: Map<number, Player>;
-  private readonly playerDB: _PlayerDB;
+  private readonly _db: PlayerDB;
 
-  constructor(db: _PlayerDB) {
+  constructor(db: PlayerDB) {
     this.playersBySource = new Map<number, Player>();
-    this.playerDB = db;
+    this._db = db;
   }
 
   addPlayerToMap(source: number, player: Player) {
@@ -31,11 +32,11 @@ class _PlayerService {
       const identifier = getPlayerGameLicense(source);
       let playerId: number;
 
-      const doesPlayerExist = await this.playerDB.getPlayer(identifier);
+      const doesPlayerExist = await this._db.getPlayer(identifier);
       if (doesPlayerExist) playerId = doesPlayerExist.id;
 
       if (!doesPlayerExist) {
-        playerId = await this.playerDB.createPlayer(identifier, username);
+        playerId = await this._db.createPlayer(identifier, username);
         console.log('player does exist');
       }
 
@@ -43,12 +44,10 @@ class _PlayerService {
 
       this.addPlayerToMap(source, newPlayer);
 
+      console.log('New player loaded:');
       console.log(newPlayer);
     } catch (err) {
       console.log(err.message);
     }
   }
 }
-
-const PlayerService = Container.get(_PlayerService);
-export default PlayerService;

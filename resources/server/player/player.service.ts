@@ -3,7 +3,6 @@ import { getPlayerGameLicense } from '../utils/getPlayerGameLicense';
 import { PlayerDB } from './player.db';
 import { injectable, singleton } from 'tsyringe';
 
-@injectable()
 @singleton()
 export class PlayerService {
   private readonly playersBySource: Map<number, Player>;

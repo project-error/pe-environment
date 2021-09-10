@@ -1,7 +1,6 @@
 import { PlayerService } from './player.service';
 import { injectable, singleton } from 'tsyringe';
 
-@injectable()
 @singleton()
 export class PlayerController {
   private readonly _playerService: PlayerService;

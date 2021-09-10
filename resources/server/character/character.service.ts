@@ -3,7 +3,6 @@ import { CharacterDB } from './character.db';
 import { PlayerService } from '../player/player.service';
 import { injectable, singleton } from 'tsyringe';
 
-@injectable()
 @singleton()
 export class CharacterService {
   private readonly database: CharacterDB;

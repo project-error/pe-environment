@@ -1,11 +1,6 @@
 import 'reflect-metadata';
-import { container, injectable } from 'tsyringe';
-import { PlayerController } from './player/player.controller';
-import { CharacterController } from './character/character.controller';
+import './player/player.controller';
+import './character/character.controller';
+import { Base } from './base/Base';
 
-@injectable()
-class Server {
-  constructor(public playerController: PlayerController, public characterController: CharacterController) {}
-}
-
-container.resolve(Server);
+new Base().bootstrap();

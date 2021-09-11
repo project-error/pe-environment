@@ -1,7 +1,7 @@
-import { Container, Service } from 'typedi';
 import { CharacterDB } from './character.db';
 import { PlayerService } from '../player/player.service';
-import { injectable, singleton } from 'tsyringe';
+import { singleton } from 'tsyringe';
+import { CharacterProps } from './character.interface';
 
 @singleton()
 export class CharacterService {
@@ -13,9 +13,9 @@ export class CharacterService {
     this._playerService = playerService;
   }
 
-  async handleCreateCharacter(src: number, characterDto: any) {
+  async handleCreateCharacter(src: number, characterDto: CharacterProps) {
     const player = this._playerService.getPlayer(src);
 
-    await this.database.createCharacter(player.getIdentifier(), characterDto);
+    await this.database.createCharacter(player.getPlayerId(), characterDto);
   }
 }

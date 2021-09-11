@@ -1,7 +1,7 @@
 import { CharacterService } from './character.service';
-import { injectable, singleton } from 'tsyringe';
+import { ServerController } from '../decorators/Controller';
 
-@singleton()
+@ServerController()
 export class CharacterController {
   private readonly _characterService: CharacterService;
 

@@ -27,4 +27,16 @@ export class CharacterDB {
 
     return <CharacterProps[]>results;
   }
+
+  async getSelectedCharacter(playerId: number, character: CharacterProps): Promise<CharacterProps> {
+    const query = `SELECT id AS characterId, name, phone_number AS phoneNumber
+                   FROM character
+                   WHERE playerid = ?
+                     AND id = ?`;
+
+    const [results] = await pool.query(query, [playerId, character.characterId]);
+
+    const result = <CharacterProps[]>results;
+    return result[0];
+  }
 }

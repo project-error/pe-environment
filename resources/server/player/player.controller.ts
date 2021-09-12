@@ -1,7 +1,7 @@
 import { PlayerService } from './player.service';
 import { ServerController } from '../decorators/Controller';
 
-@ServerController()
+@ServerController('Player')
 export class PlayerController {
   private readonly _playerService: PlayerService;
 

@@ -1,17 +1,18 @@
-import { DependencyContainer } from 'tsyringe';
+import { container } from 'tsyringe';
 
 export class Base {
-  static modules: Map<string, string>;
-
-  static container: DependencyContainer;
+  static container = container;
 
   bootstrap() {
-    Base.container.afterResolution('server-controller', (_t, result: any[]) => {
-      for (const controller of result) {
-        controller.init();
-      }
+    Base.container.beforeResolution('server-controller', (_t, result: any) => {
+      console.log('Initializing controllers');
     });
 
+    Base.container.afterResolution('server-controller', (_t, result: any) => {
+      for (const controller of result) {
+        console.log(`Controller [${controller.name}] Initialized`);
+      }
+    });
     Base.container.resolveAll('server-controller');
   }
 }

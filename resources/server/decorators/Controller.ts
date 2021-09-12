@@ -1,11 +1,12 @@
 import { Base } from '../base/Base';
-import { container, singleton } from 'tsyringe';
+import { singleton } from 'tsyringe';
 import { constructor } from 'tsyringe/dist/typings/types';
 
-export function ServerController<T>() {
+export function ServerController<T>(name: string) {
   return function (target: constructor<T>) {
+    target.prototype.name = name;
+
     singleton()(target);
-    container.registerSingleton('server-controller', target);
-    Base.modules.set(target.name, target.name);
+    Base.container.registerSingleton('server-controller', target);
   };
 }

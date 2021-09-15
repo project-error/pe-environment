@@ -1,1 +1,1 @@
-// Start coding!
+import './character/index';

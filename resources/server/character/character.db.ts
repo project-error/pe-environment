@@ -12,29 +12,31 @@ export class CharacterDB {
    * @return insertId The characterId
    */
   async createCharacter(playerId: number, characterDto: any): Promise<number> {
-    const query = `INSERT INTO character (name, playerid)
+    const query = `INSERT INTO characters (name, playerid)
                    VALUES (?, ?)`;
     const [results] = await pool.query(query, [characterDto.name, playerId]);
 
     return (<ResultSetHeader>results).insertId;
   }
 
-  async getCharacters(playerId: string): Promise<CharacterProps[]> {
+  async getCharacters(playerId: number): Promise<CharacterProps[]> {
+    console.log('getting characters');
     const query = `SELECT id AS characterId, name, phone_number AS phoneNumber
-                   FROM character
+                   FROM characters
                    WHERE playerid = ?`;
     const [results] = await pool.query(query, [playerId]);
+    console.log('got characters');
 
     return <CharacterProps[]>results;
   }
 
   async getSelectedCharacter(playerId: number, character: CharacterProps): Promise<CharacterProps> {
     const query = `SELECT id AS characterId, name, phone_number AS phoneNumber
-                   FROM character
+                   FROM characters
                    WHERE playerid = ?
                      AND id = ?`;
 
-    const [results] = await pool.query(query, [playerId, character.characterId]);
+    const [results] = await pool.query(query, [playerId, character.id]);
 
     const result = <CharacterProps[]>results;
     return result[0];

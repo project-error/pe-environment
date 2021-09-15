@@ -2,18 +2,16 @@ import { CharacterService } from './character.service';
 import { ServerController } from '../decorators/Controller';
 import { CharacterEvents } from '../../shared/events';
 import { CharacterProps } from './character.interface';
+import { EventListener, NetEvent } from '../decorators/Events';
+import { Character } from './character.class';
 
 @ServerController('Character')
+@EventListener()
 export class CharacterController {
   private readonly _characterService: CharacterService;
-  private readonly characterByPlayerId: Map<number, CharacterProps>;
 
   constructor(characterService: CharacterService) {
     this._characterService = characterService;
-    this.characterByPlayerId = new Map<number, CharacterProps>();
-
-    onNet('pe:characterSelected', async (characterDto: any) => await this.createCharacter(characterDto));
-    onNet(CharacterEvents.SELECT_CHARACTER, async (character: CharacterProps) => await this.selectCharacter(character));
   }
 
   async createCharacter(characterDto: any) {
@@ -22,11 +20,20 @@ export class CharacterController {
     await this._characterService.handleCreateCharacter(_source, characterDto);
   }
 
-  async selectCharacter(character: CharacterProps) {
+  @NetEvent(CharacterEvents.GET_CHARACTERS)
+  async getCharacters() {
     const _source = global.source;
 
-    const selectedCharacter = await this._characterService.handleGetSelectedCharacter(_source, character);
+    const characters = await this._characterService.handleGetCharacters(_source);
 
-    this.characterByPlayerId.set(_source, selectedCharacter);
+    emitNet(CharacterEvents.SEND_CHARACTERS, _source, characters);
+  }
+
+  @NetEvent(CharacterEvents.SELECT_CHARACTER)
+  async selectCharacter(character: CharacterProps) {
+    console.log('select char', character);
+    const _source = global.source;
+
+    await this._characterService.handleGetSelectedCharacter(_source, character);
   }
 }

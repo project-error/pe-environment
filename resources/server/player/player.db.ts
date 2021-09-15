@@ -5,7 +5,7 @@ import { singleton } from 'tsyringe';
 @singleton()
 export class PlayerDB {
   async createPlayer(identifier: string, username: string): Promise<number> {
-    const query = `INSERT INTO player (identifier, username)
+    const query = `INSERT INTO user (identifier, username)
                    VALUES (?, ?)`;
     const [results] = await pool.query(query, [identifier, username]);
 
@@ -13,7 +13,7 @@ export class PlayerDB {
   }
 
   async getPlayer(identifier: string): Promise<any> {
-    const query = `SELECT id, username FROM player WHERE identifier = ?`;
+    const query = `SELECT id, username FROM user WHERE identifier = ?`;
 
     const [results] = await pool.query(query, [identifier]);
 

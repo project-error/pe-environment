@@ -1,9 +1,5 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "*": ["types/*"]
-    },
     "outDir": "./",
     "noImplicitAny": true,
     "module": "commonjs",

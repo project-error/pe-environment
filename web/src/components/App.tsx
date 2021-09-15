@@ -38,12 +38,10 @@ const App: React.FC = () => {
   });
 
   useNuiEvent<any[]>('getCharacters', (data) => {
-    console.log('got chars nui', data);
     setCharacters(data);
   });
 
   const selectCharacter = (character: any) => {
-    console.log('nui character', character);
     fetchNui('pe:characterSelected', { id: character.characterId, name: character.name }).then((resp) => {
       setIsVisible(false);
     });

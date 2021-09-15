@@ -35,7 +35,6 @@ export class PlayerService {
       if (doesPlayerExist) playerId = doesPlayerExist.id;
 
       if (!doesPlayerExist) {
-        console.log('player does not exist');
         playerId = await this._db.createPlayer(identifier, username);
       }
 

@@ -26,7 +26,6 @@ export class CharacterService {
     const player = this._playerService.getPlayer(src);
 
     const characters = await this._db.getCharacters(player.getPlayerId());
-    console.log(characters);
     return characters;
   }
 
@@ -34,8 +33,6 @@ export class CharacterService {
     const player = this._playerService.getPlayer(src);
 
     const selectedCharacter = await this._db.getSelectedCharacter(player.getPlayerId(), character);
-
-    console.log('returned sel char', selectedCharacter);
 
     const newCharacter = new Character({
       name: selectedCharacter.name,

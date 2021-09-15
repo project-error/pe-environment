@@ -20,12 +20,10 @@ export class CharacterDB {
   }
 
   async getCharacters(playerId: number): Promise<CharacterProps[]> {
-    console.log('getting characters');
     const query = `SELECT id AS characterId, name, phone_number AS phoneNumber
                    FROM characters
                    WHERE playerid = ?`;
     const [results] = await pool.query(query, [playerId]);
-    console.log('got characters');
 
     return <CharacterProps[]>results;
   }

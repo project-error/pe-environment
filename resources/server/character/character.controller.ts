@@ -31,7 +31,6 @@ export class CharacterController {
 
   @NetEvent(CharacterEvents.SELECT_CHARACTER)
   async selectCharacter(character: CharacterProps) {
-    console.log('select char', character);
     const _source = global.source;
 
     await this._characterService.handleGetSelectedCharacter(_source, character);

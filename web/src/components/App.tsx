@@ -38,15 +38,13 @@ const App: React.FC = () => {
   });
 
   useNuiEvent<any[]>('getCharacters', (data) => {
+    console.log('got chars nui', data);
     setCharacters(data);
   });
 
   const selectCharacter = (character: any) => {
+    console.log('nui character', character);
     fetchNui('pe:characterSelected', { id: character.characterId, name: character.name }).then((resp) => {
-      if (resp.status !== 'ok') {
-        console.log('gg');
-      }
-
       setIsVisible(false);
     });
   };
@@ -55,11 +53,12 @@ const App: React.FC = () => {
     <>
       {isVisible && (
         <div className="nui-wrapper">
+          <h1>Character Selection</h1>
           {characters.map((char: any) => (
             <div key={char.characterId} className="char-container">
               <div className="char-box">
                 <p>{char.name}</p>
-                <button onClick={selectCharacter} className="char-button">
+                <button onClick={() => selectCharacter(char)} className="char-button">
                   Select
                 </button>
               </div>

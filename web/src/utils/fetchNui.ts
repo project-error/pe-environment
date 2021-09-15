@@ -20,7 +20,7 @@ export async function fetchNui<T = any>(eventName: string, data?: any): Promise<
 
   const resourceName = (window as any).GetParentResourceName
     ? (window as any).GetParentResourceName()
-    : 'nui-frame-app';
+    : 'pe-environment';
 
   const resp = await fetch(`https://${resourceName}/${eventName}`, options);
 

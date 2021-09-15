@@ -15,17 +15,7 @@ const server = {
       },
     ],
   },
-  plugins: [
-    new webpack.DefinePlugin({ 'global.GENTLY': false }),
-    new RemovePlugin({
-      before: {
-        include: [path.resolve(buildPath, 'server')],
-      },
-      watch: {
-        include: [path.resolve(buildPath, 'server')],
-      },
-    }),
-  ],
+  plugins: [new webpack.DefinePlugin({ 'global.GENTLY': false })],
   optimization: {
     minimize: true,
   },
@@ -33,7 +23,7 @@ const server = {
     extensions: ['.ts', '.js'],
   },
   output: {
-    filename: '[contenthash].server.js',
+    filename: 'server.js',
     path: path.resolve(buildPath, 'server'),
   },
   target: 'node',
@@ -50,16 +40,7 @@ const client = {
       },
     ],
   },
-  plugins: [
-    new RemovePlugin({
-      before: {
-        include: [path.resolve(buildPath, 'client')],
-      },
-      watch: {
-        include: [path.resolve(buildPath, 'client')],
-      },
-    }),
-  ],
+  plugins: [new webpack.DefinePlugin({ 'global.GENTLY': false })],
   optimization: {
     minimize: true,
   },
@@ -67,7 +48,7 @@ const client = {
     extensions: ['.ts', '.js'],
   },
   output: {
-    filename: '[contenthash].client.js',
+    filename: 'client.js',
     path: path.resolve(buildPath, 'client'),
   },
 };

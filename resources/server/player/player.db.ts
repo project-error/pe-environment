@@ -12,12 +12,12 @@ export class PlayerDB {
     return (<ResultSetHeader>results).insertId;
   }
 
-  async getPlayer(identifier: string): Promise<any> {
+  async getPlayer(identifier: string): Promise<{ id: number; username: string }> {
     const query = `SELECT id, username FROM user WHERE identifier = ?`;
 
     const [results] = await pool.query(query, [identifier]);
 
-    const result = <any[]>results;
+    const result = <{ id: number; username: string }[]>results;
     return result[0];
   }
 }

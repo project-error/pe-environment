@@ -11,6 +11,10 @@ export class PlayerService {
   constructor(db: PlayerDB) {
     this.playersBySource = new Map<number, Player>();
     this._db = db;
+
+    global.exports('GetPlayers', () => {
+      return this.playersBySource.values();
+    });
   }
 
   addPlayerToMap(source: number, player: Player) {

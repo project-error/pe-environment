@@ -14,7 +14,7 @@ export class CharacterController {
     this._characterService = characterService;
   }
 
-  async createCharacter(characterDto: any) {
+  async createCharacter(characterDto: CharacterProps) {
     const _source = global.source;
 
     await this._characterService.handleCreateCharacter(_source, characterDto);

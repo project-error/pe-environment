@@ -42,7 +42,7 @@ const App: React.FC = () => {
   });
 
   const selectCharacter = (character: any) => {
-    fetchNui('pe:characterSelected', { id: character.characterId, name: character.name }).then((resp) => {
+    fetchNui('pe:characterSelected', { characterId: character.characterId, name: character.name }).then((resp) => {
       setIsVisible(false);
     });
   };

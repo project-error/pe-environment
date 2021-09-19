@@ -1,8 +1,8 @@
 export interface CharacterProps {
-  id?: number;
+  id: number;
   characterId: number;
   name: string;
-  phoneNumber?: string;
+  phoneNumber: string;
 }
 
 export interface CharacterClassProps {

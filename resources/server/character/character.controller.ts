@@ -1,9 +1,9 @@
 import { CharacterService } from './character.service';
 import { ServerController } from '../decorators/Controller';
 import { CharacterEvents } from '../../shared/events';
-import { CharacterProps } from './character.interface';
 import { EventListener, NetEvent } from '../decorators/Events';
 import { Character } from './character.class';
+import { CharacterProps } from '../../shared/types/character';
 
 @ServerController('Character')
 @EventListener()

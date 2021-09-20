@@ -1,4 +1,4 @@
-import { CharacterClassProps, CharacterProps } from './character.interface';
+import { CharacterClassProps, CharacterProps } from '../../shared/types/character';
 
 export class Character {
   private readonly _source: number;

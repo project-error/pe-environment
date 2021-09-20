@@ -1,6 +1,6 @@
 import { singleton } from 'tsyringe';
 import { pool } from '../database/db';
-import { CharacterProps } from './character.interface';
+import { CharacterProps } from '../../shared/types/character';
 import { ResultSetHeader } from 'mysql2';
 
 @singleton()

@@ -1,7 +1,7 @@
 import { CharacterDB } from './character.db';
 import { PlayerService } from '../player/player.service';
 import { singleton } from 'tsyringe';
-import { CharacterProps } from './character.interface';
+import { CharacterProps } from '../../shared/types/character';
 import { Character } from './character.class';
 
 @singleton()

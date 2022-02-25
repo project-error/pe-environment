@@ -1,6 +1,7 @@
 import { PlayerService } from './player.service';
 import { ServerController } from '../decorators/Controller';
 import { Event, EventListener } from '../decorators/Events';
+import { CharacterEvents } from '../../shared/events';
 
 @ServerController('Player')
 @EventListener()
@@ -19,9 +20,20 @@ export class PlayerController {
   }
 
   @Event('playerDropped')
-  public async playerDropped() {
+  public playerDropped() {
     const _source = global.source;
 
     this._playerService.removePlayer(_source);
+  }
+
+  @Event('onServerResourceStart')
+  public async serverResourceStart(resource: string) {
+    if (resource === GetCurrentResourceName()) {
+      const players = getPlayers();
+
+      for (const player of players) {
+        await this._playerService.handleNewPlayer(parseInt(player));
+      }
+    }
   }
 }

@@ -14,10 +14,11 @@ export class CharacterController {
     this._characterService = characterService;
   }
 
-  async createCharacter(characterDto: CharacterProps) {
+  @NetEvent(CharacterEvents.CREATE_CHARACTER)
+  async createCharacter(data: any) {
     const _source = global.source;
 
-    await this._characterService.handleCreateCharacter(_source, characterDto);
+    await this._characterService.handleCreateCharacter(_source, data);
   }
 
   @NetEvent(CharacterEvents.GET_CHARACTERS)

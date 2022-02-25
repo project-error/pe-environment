@@ -25,8 +25,9 @@ export class PlayerService {
     this.playersBySource.delete(source);
   }
 
-  getPlayer(source: number) {
-    return this.playersBySource.get(source);
+  // any because I am lazy
+  getPlayer(source: any) {
+    return this.playersBySource.get(parseInt(source));
   }
 
   async handleNewPlayer(source: number) {

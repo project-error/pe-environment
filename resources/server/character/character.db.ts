@@ -11,10 +11,10 @@ export class CharacterDB {
    * @param characterDto Data that has been sent from NUI
    * @return insertId The characterId
    */
-  async createCharacter(playerId: number, characterDto: CharacterProps): Promise<number> {
+  async createCharacter(playerId: number, name: string): Promise<number> {
     const query = `INSERT INTO characters (name, playerid)
                    VALUES (?, ?)`;
-    const [results] = await pool.query(query, [characterDto.name, playerId]);
+    const [results] = await pool.query(query, [name, playerId]);
 
     return (<ResultSetHeader>results).insertId;
   }

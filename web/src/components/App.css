@@ -30,3 +30,14 @@
   padding: 15px 30px;
   border-radius: 3px;
 }
+
+.character-modal {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  background: #232323;
+  height: 500px;
+  min-width: 400px;
+}

@@ -1,4 +1,4 @@
-CREATE TABLE `pe-environment`.characters
+CREATE TABLE `characters`
 (
     id           int(11)      NOT NULL AUTO_INCREMENT,
     name         varchar(50)  NOT NULL,

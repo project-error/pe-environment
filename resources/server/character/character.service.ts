@@ -23,10 +23,10 @@ export class CharacterService {
     });
   }
 
-  async handleCreateCharacter(src: number, characterDto: CharacterProps): Promise<void> {
+  async handleCreateCharacter(src: number, data: { name: string }): Promise<void> {
     const player = this._playerService.getPlayer(src);
 
-    await this._db.createCharacter(player.getPlayerId(), characterDto);
+    await this._db.createCharacter(player.getPlayerId(), data.name);
   }
 
   async handleGetCharacters(src: number) {
@@ -47,15 +47,13 @@ export class CharacterService {
       phoneNumber: selectedCharacter.phoneNumber,
     });
 
-    console.log('New character');
-    console.log(newCharacter);
-
     this.charactersBySource.set(src, newCharacter);
 
-    emit('npwd:newPlayer', {
+    global.exports['npwd'].newPlayer({
       source: src,
       identifier: selectedCharacter.characterId,
-      firstname: selectedCharacter.name,
+      phoneNumber: selectedCharacter.phoneNumber,
+      firstName: selectedCharacter.name,
     });
   }
 }
